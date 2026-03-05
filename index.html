@@ -10,71 +10,44 @@
             --neon-blue: #00d2ff;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --border-white: rgba(255, 255, 255, 0.15);
-            /* Brand Colors */
             --whatsapp: #25D366; --linkedin: #0077b5; --instagram: #E1306C;
             --website: #00d2ff; --phone: #4CAF50; --mail: #EA4335;
         }
 
-        /* Essential Reset: Removes Blue Square on Tap */
-        * {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            box-sizing: border-box;
-        }
+        /* Prevent blue highlight on tap and standard resets */
+        * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
 
         body {
-            margin: 0;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px 0;
+            margin: 0; background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+            color: #fff; font-family: 'Inter', sans-serif; display: flex;
+            justify-content: center; min-height: 100vh; padding: 20px 0;
         }
 
-        .card-container {
-            width: 95%;
-            max-width: 400px;
-            text-align: center;
-        }
+        .card-container { width: 95%; max-width: 400px; text-align: center; }
 
-        /* Profile Section */
+        /* Profile Panel */
         .profile-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-white);
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            margin-bottom: 20px;
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-white); border-radius: 30px;
+            padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); margin-bottom: 20px;
         }
 
         .avatar {
-            width: 110px; height: 110px;
-            border-radius: 50%;
-            border: 3px solid var(--neon-blue);
-            margin-bottom: 15px;
+            width: 110px; height: 110px; border-radius: 50%;
+            border: 3px solid var(--neon-blue); margin-bottom: 15px;
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
-        h1 { font-size: 1.6rem; margin: 0 0 5px; letter-spacing: 1px; }
+        h1 { font-size: 1.6rem; margin: 0 0 5px; }
         .tagline { font-size: 0.85rem; color: #888; margin-bottom: 25px; }
 
         /* Icon Grid */
-        .action-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 15px; margin-bottom: 25px;
-        }
-
+        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
         .icon-box {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-white);
-            padding: 18px; border-radius: 20px;
-            color: #fff; text-decoration: none;
+            background: var(--glass-bg); border: 1px solid var(--border-white);
+            padding: 18px; border-radius: 20px; color: #fff; text-decoration: none;
             transition: all 0.4s ease; font-size: 1.3rem;
         }
-
         .icon-box:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
         #phoneBtn:hover i { color: var(--phone); text-shadow: 0 0 10px var(--phone); }
         #waBtn:hover i { color: var(--whatsapp); text-shadow: 0 0 10px var(--whatsapp); }
@@ -85,10 +58,10 @@
         .btn {
             background: var(--glass-bg); border: 1px solid var(--border-white);
             padding: 16px; border-radius: 18px; color: white;
-            text-decoration: none; display: flex; align-items: center;
-            gap: 15px; font-weight: 500; transition: all 0.3s ease;
+            text-decoration: none; display: flex; align-items: center; gap: 15px;
+            font-weight: 500; transition: all 0.3s ease;
         }
-        .btn i { color: #fff; width: 25px; font-size: 1.2rem; transition: 0.3s; }
+        .btn i { width: 25px; font-size: 1.2rem; transition: 0.3s; }
         .btn:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
         .btn:hover#saveContact i { color: var(--neon-blue); }
         .btn:hover[href*="linkedin"] i { color: var(--linkedin); }
@@ -97,35 +70,54 @@
 
         .pay-btn { background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); border: none !important; justify-content: center; }
 
-        /* Task Panel Styling */
+        /* Task Panel */
         .todo-panel {
             background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--border-white); border-radius: 30px;
-            padding: 25px; text-align: left;
+            border: 1px solid var(--border-white); border-radius: 30px; padding: 25px;
         }
 
-        .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .calendar-nav h2 { font-size: 1rem; color: var(--neon-blue); margin: 0; text-transform: uppercase; }
-        .nav-btn { background: none; border: 1px solid var(--border-white); color: white; padding: 5px 12px; border-radius: 10px; cursor: pointer; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .calendar-nav { display: flex; align-items: center; gap: 10px; }
+        .calendar-nav h2 { font-size: 0.9rem; color: var(--neon-blue); margin: 0; text-transform: uppercase; width: 120px; }
+        
+        .nav-btn, .add-task-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-white);
+            color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer;
+        }
+        .add-task-btn { background: var(--neon-blue); color: #000; font-weight: bold; border: none; }
 
         .event-item {
-            background: rgba(255, 255, 255, 0.03); padding: 15px;
-            border-radius: 15px; margin-bottom: 10px; border-left: 3px solid transparent;
-            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 18px;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
         }
-        .nearest { background: rgba(0, 210, 255, 0.1); border-left: 3px solid var(--neon-blue); transform: scale(1.02); }
-        .nearest .event-title { font-size: 1.15rem; font-weight: bold; color: var(--neon-blue); }
-        
+        .nearest { background: rgba(0, 210, 255, 0.1); border-left: 3px solid var(--neon-blue); }
+        .nearest .event-title { font-size: 1.1rem; font-weight: bold; color: var(--neon-blue); }
+
+        .event-content { flex: 1; text-align: left; }
         .event-date { font-size: 0.75rem; color: #666; margin-top: 4px; }
-        .exam-tag { background: #ff4d4d; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-left: 10px; font-weight: bold; }
+        .event-checkbox { width: 18px; height: 18px; accent-color: var(--neon-blue); }
+        .completed-text { text-decoration: line-through; opacity: 0.4; }
+        .delete-btn { color: #ff4d4d; background: none; border: none; cursor: pointer; font-size: 1rem; }
+        .exam-tag { background: #ff4d4d; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
+
+        /* Modals */
+        #addEventModal, #qrModal {
+            display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+            background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center;
+        }
+        .modal-content {
+            background: #1a1a2e; padding: 25px; border-radius: 25px; 
+            border: 1px solid var(--border-white); width: 85%; max-width: 350px;
+        }
+        .modal-content input {
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px;
+            border: 1px solid var(--border-white); background: rgba(255,255,255,0.05); color: white;
+        }
+        .modal-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .save-btn { flex: 1; background: var(--neon-blue); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; }
+        .cancel-btn { flex: 1; background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 12px; border-radius: 10px; }
 
         footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 4px; }
-
-        /* Desktop Modal */
-        #qrModal {
-            display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.9); z-index:1000; justify-content:center; align-items:center;
-        }
     </style>
 </head>
 <body>
@@ -152,10 +144,13 @@
     </div>
 
     <div class="todo-panel">
-        <div class="calendar-nav">
-            <button class="nav-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-            <h2 id="monthDisplay">MONTH YEAR</h2>
-            <button class="nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+        <div class="calendar-header">
+            <div class="calendar-nav">
+                <button class="nav-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                <h2 id="monthDisplay">MONTH YEAR</h2>
+                <button class="nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <button class="add-task-btn" onclick="openModal()"><i class="fas fa-plus"></i></button>
         </div>
         <div id="eventContainer"></div>
     </div>
@@ -163,12 +158,25 @@
     <footer>NATNEX • SMARD</footer>
 </div>
 
+<div id="addEventModal">
+    <div class="modal-content">
+        <h3 style="margin-top:0; color:var(--neon-blue)">New Event</h3>
+        <input type="text" id="eventTitle" placeholder="Event Name">
+        <input type="date" id="eventDate">
+        <input type="time" id="eventTime">
+        <div class="modal-actions">
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            <button class="save-btn" onclick="saveNewEvent()">Add Event</button>
+        </div>
+    </div>
+</div>
+
 <div id="qrModal">
     <div style="background:white; padding:25px; border-radius:25px; text-align:center;">
-        <p style="color:black; font-weight:bold; margin-bottom:15px;">Scan to Pay</p>
+        <p style="color:black; font-weight:bold; margin-bottom:15px;">Scan with Any UPI App</p>
         <img src="qrwalet.png" alt="UPI QR" style="width:200px; height:200px;">
         <br>
-        <button onclick="document.getElementById('qrModal').style.display='none'" style="margin-top:15px; padding:10px 20px; border:none; background:#000; color:white; border-radius:10px; cursor:pointer;">Close</button>
+        <button onclick="document.getElementById('qrModal').style.display='none'" style="margin-top:15px; padding:10px 20px; border:none; background:#000; color:white; border-radius:10px;">Close</button>
     </div>
 </div>
 
