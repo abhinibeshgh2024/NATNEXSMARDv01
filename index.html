@@ -168,6 +168,86 @@
             <a id="upiBtn" href="javascript:void(0)" class="btn pay-btn"><i class="fas fa-bolt"></i> Pay via UPI</a>
         </div>
     </div>
+    <div class="todo-panel">
+    <div class="todo-header">
+        <div id="currentDate"></div>
+        <button id="addTaskBtn"><i class="fas fa-plus"></i></button>
+    </div>
+    <div class="todo-list" id="todoContainer">
+        </div>
+</div>
+
+<style>
+    .todo-panel {
+        margin-top: 20px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-white);
+        border-radius: 25px;
+        padding: 20px;
+        text-align: left;
+    }
+
+    .todo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    #currentDate {
+        font-weight: bold;
+        color: var(--neon-blue);
+        font-size: 0.9rem;
+    }
+
+    #addTaskBtn {
+        background: var(--neon-blue);
+        border: none;
+        color: #000;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .todo-list {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .todo-item {
+        background: rgba(255,255,255,0.05);
+        margin-bottom: 8px;
+        padding: 10px 15px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        animation: slideIn 0.3s ease;
+    }
+
+    .todo-item.completed {
+        opacity: 0.5;
+        text-decoration: line-through;
+    }
+
+    .todo-item i {
+        cursor: pointer;
+        color: #ff4d4d;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
     <footer>NATNEX • SMARD</footer>
 </div>
 
