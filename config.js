@@ -50,3 +50,56 @@ document.getElementById('saveContact').addEventListener('click', function(e) {
     
     if (window.navigator.vibrate) window.navigator.vibrate(50);
 });
+// Calendar & To-Do Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const dateDisplay = document.getElementById('currentDate');
+    const todoContainer = document.getElementById('todoContainer');
+    const addBtn = document.getElementById('addTaskBtn');
+
+    // 1. Aaj ki date dikhao
+    const options = { weekday: 'long', day: 'numeric', month: 'short' };
+    dateDisplay.innerText = new Date().toLocaleDateString('en-US', options);
+
+    // 2. LocalStorage se tasks load karo
+    let tasks = JSON.parse(localStorage.getItem('natnex_tasks')) || [];
+
+    function renderTasks() {
+        todoContainer.innerHTML = '';
+        tasks.forEach((task, index) => {
+            const div = document.createElement('div');
+            div.className = `todo-item ${task.done ? 'completed' : ''}`;
+            div.innerHTML = `
+                <span onclick="toggleTask(${index})">${task.text}</span>
+                <i class="fas fa-trash-alt" onclick="deleteTask(${index})"></i>
+            `;
+            todoContainer.appendChild(div);
+        });
+    }
+
+    // 3. Add Task Function
+    addBtn.onclick = () => {
+        const text = prompt("Enter your task for today:");
+        if (text) {
+            tasks.push({ text: text, done: false });
+            saveAndRender();
+        }
+    };
+
+    // 4. Toggle & Delete Functions
+    window.toggleTask = (index) => {
+        tasks[index].done = !tasks[index].done;
+        saveAndRender();
+    };
+
+    window.deleteTask = (index) => {
+        tasks.splice(index, 1);
+        saveAndRender();
+    };
+
+    function saveAndRender() {
+        localStorage.setItem('natnex_tasks', JSON.stringify(tasks));
+        renderTasks();
+    }
+
+    renderTasks();
+});
