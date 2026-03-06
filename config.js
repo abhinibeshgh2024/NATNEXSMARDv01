@@ -1,21 +1,49 @@
-// Personal Config
+// Personal Info
 const myNumber = "919142543191";
-const myUPI = "9142543191.wallet@phonepe";
+const myEmail = "nexpploro@gmail.com";
 const myName = "Abhinibesh Gupta";
 
-// Profile setup
+// Profile Button Links
 document.getElementById('waBtn').href = `https://wa.me/${myNumber}`;
 document.getElementById('phoneBtn').href = `tel:+${myNumber}`;
-document.getElementById('mailBtn').href = `mailto:contact@natnex.in`;
+document.getElementById('mailBtn').href = `mailto:${myEmail}`;
 
-// UPI logic
-document.getElementById('upiBtn').onclick = () => {
-    const upiURL = `upi://pay?pa=${myUPI}&pn=${encodeURIComponent(myName)}&cu=INR`;
-    window.location.href = upiURL;
+// --- APPOINTMENT SYSTEM ---
+const aptModal = document.getElementById('aptModal');
+document.getElementById('aptBtn').onclick = () => aptModal.style.display = 'flex';
+window.closeAptModal = () => aptModal.style.display = 'none';
+
+window.sendAptEmail = () => {
+    const name = document.getElementById('aptName').value;
+    const title = document.getElementById('aptTitle').value;
+    const date = document.getElementById('aptDate').value;
+    const time = document.getElementById('aptTime').value;
+    const desc = document.getElementById('aptDesc').value;
+
+    if (name && title && date && time) {
+        const subject = encodeURIComponent(`Appointment Request: ${title}`);
+        
+        // AI Logic Style Pre-written Body
+        const body = encodeURIComponent(
+            `Hello Abhinibesh,\n\n` +
+            `I would like to request an appointment. Here are the details:\n\n` +
+            `👤 Name: ${name}\n` +
+            `📅 Date: ${date}\n` +
+            `⏰ Time: ${time}\n` +
+            `📝 Purpose: ${title}\n\n` +
+            `Description:\n${desc}\n\n` +
+            `Please let me know if this slot works for you.\n\n` +
+            `Sent via SMARD Card.`
+        );
+
+        window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+        closeAptModal();
+    } else {
+        alert("Please fill in your Name, Title, Date and Time.");
+    }
 };
 
-// --- DYNAMIC TO-DO LOGIC ---
-// Initialize: Blank for unique devices, Loads existing for returning users
+// --- DYNAMIC TO-DO LOGIC (Unique Devices) ---
 let myTasks = JSON.parse(localStorage.getItem('user_events')) || [];
 let viewDate = new Date();
 const today = new Date();
@@ -30,70 +58,55 @@ function renderCalendar() {
     const y = viewDate.getFullYear();
     monthDisplay.innerText = viewDate.toLocaleString('default', { month: 'long', year: 'numeric' });
 
-    // Filter events for this month + remove passed events
     let filtered = myTasks.filter(task => {
         const tDate = new Date(task.date);
         return tDate.getMonth() === m && tDate.getFullYear() === y && tDate >= today;
     }).sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (filtered.length === 0) {
-        container.innerHTML = `<p style="color:#444; font-size:0.8rem; padding:10px;">No events scheduled.</p>`;
+        container.innerHTML = `<p style="color:#444; font-size:0.8rem; padding:10px;">No personal tasks scheduled.</p>`;
     }
 
-    filtered.forEach((task, index) => {
-        const isNearest = index === 0 && m === new Date().getMonth();
+    filtered.forEach((task) => {
         const tDate = new Date(task.date);
         const div = document.createElement('div');
-        div.className = `event-item ${isNearest ? 'nearest' : ''}`;
+        div.className = `event-item`;
         div.innerHTML = `
-            <input type="checkbox" class="event-checkbox" ${task.done ? 'checked' : ''} onchange="toggleStatus(${task.id})">
-            <div class="event-content ${task.done ? 'completed-text' : ''}">
+            <div class="event-content">
                 <div class="event-title">${task.title}</div>
                 <div class="event-date">${tDate.toDateString()} | ${tDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
             </div>
-            <button class="delete-btn" onclick="deleteEvent(${task.id})"><i class="fas fa-trash-alt"></i></button>
+            <button class="delete-btn" onclick="deleteTodo(${task.id})"><i class="fas fa-trash-alt"></i></button>
         `;
         container.appendChild(div);
     });
 }
 
-// Global functions for Modal & Logic
-window.openModal = () => document.getElementById('addEventModal').style.display = 'flex';
-window.closeModal = () => document.getElementById('addEventModal').style.display = 'none';
+window.openTodoModal = () => document.getElementById('todoModal').style.display = 'flex';
+window.closeTodoModal = () => document.getElementById('todoModal').style.display = 'none';
 
-window.saveNewEvent = () => {
-    const title = document.getElementById('eventTitle').value;
-    const date = document.getElementById('eventDate').value;
-    const time = document.getElementById('eventTime').value;
+window.saveNewTodo = () => {
+    const title = document.getElementById('todoTitle').value;
+    const date = document.getElementById('todoDate').value;
+    const time = document.getElementById('todoTime').value;
     if (title && date && time) {
-        myTasks.push({ id: Date.now(), title, date: `${date}T${time}`, done: false });
-        save();
-        closeModal();
-        document.getElementById('eventTitle').value = '';
-    } else { alert("Details missing!"); }
-};
-
-window.toggleStatus = (id) => {
-    if (confirm("Confirm status change?")) {
-        const task = myTasks.find(t => t.id === id);
-        task.done = !task.done;
-        save();
-    } else { renderCalendar(); }
-};
-
-window.deleteEvent = (id) => {
-    if (confirm("Delete this event?")) {
-        myTasks = myTasks.filter(t => t.id !== id);
-        save();
+        myTasks.push({ id: Date.now(), title, date: `${date}T${time}` });
+        localStorage.setItem('user_events', JSON.stringify(myTasks));
+        renderCalendar();
+        closeTodoModal();
+        document.getElementById('todoTitle').value = '';
     }
 };
 
-function save() {
-    localStorage.setItem('user_events', JSON.stringify(myTasks));
-    renderCalendar();
-}
+window.deleteTodo = (id) => {
+    if (confirm("Delete this task?")) {
+        myTasks = myTasks.filter(t => t.id !== id);
+        localStorage.setItem('user_events', JSON.stringify(myTasks));
+        renderCalendar();
+    }
+};
 
-// Navigation
+// Nav Listeners
 document.getElementById('prevMonth').onclick = () => { viewDate.setMonth(viewDate.getMonth() - 1); renderCalendar(); };
 document.getElementById('nextMonth').onclick = () => { viewDate.setMonth(viewDate.getMonth() + 1); renderCalendar(); };
 
@@ -104,8 +117,7 @@ document.getElementById('saveContact').onclick = (e) => {
     const blob = new Blob([vcf], { type: "text/vcard" });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "Abhinibesh.vcf";
-    a.click();
+    a.download = "Abhinibesh.vcf"; a.click();
 };
 
 renderCalendar();
