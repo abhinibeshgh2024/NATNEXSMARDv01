@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --neon-blue: #4285f4;
-            --neon-red: #ea4335;
-            --neon-yellow: #fbbc05;
-            --neon-green: #34a853;
+            --neon-blue: #4285f4; --neon-red: #ea4335; --neon-yellow: #fbbc05; --neon-green: #34a853;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --border-white: rgba(255, 255, 255, 0.15);
         }
@@ -42,28 +39,15 @@
         h1 { font-size: 1.6rem; margin: 0 0 5px; color: #fff; }
         .tagline { font-size: 0.85rem; color: #aaa; margin-bottom: 25px; }
 
-        /* Action Buttons */
-        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .icon-box {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-white);
-            padding: 18px; border-radius: 20px; color: #fff; text-decoration: none;
-            transition: 0.3s; font-size: 1.3rem;
-        }
-        .icon-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
-
         .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .btn {
             background: var(--glass-bg); border: 1px solid var(--border-white);
             padding: 16px; border-radius: 18px; color: white;
             text-decoration: none; display: flex; align-items: center; gap: 15px;
-            font-weight: 600; transition: 0.3s;
+            font-weight: 600; transition: 0.3s; cursor: pointer;
         }
-        .btn:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
-
-        /* Google Glow Buttons */
         .btn-blue { border-left: 4px solid var(--neon-blue); }
         .btn-red { border-left: 4px solid var(--neon-red); }
-        .btn-green { border-left: 4px solid var(--neon-green); }
         .btn-yellow { border-left: 4px solid var(--neon-yellow); }
         
         .apt-btn { 
@@ -71,35 +55,34 @@
             border: none; justify-content: center; box-shadow: 0 0 15px rgba(66, 133, 244, 0.4);
         }
 
-        /* CALENDAR SYSTEM */
+        /* MODAL STYLES */
+        .modal-overlay {
+            display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+            background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center;
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: #111; padding: 25px; border-radius: 25px; 
+            border: 1px solid var(--border-white); width: 90%; max-width: 380px;
+        }
+        .modal-content h3 { margin-top:0; color:var(--neon-blue); font-size: 1.2rem; }
+        .modal-content input, .modal-content textarea {
+            width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px;
+            border: 1px solid var(--border-white); background: rgba(255,255,255,0.05); color: white;
+        }
+        .save-btn { background: var(--neon-blue); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+
+        /* SAKA CALENDAR */
         .saka-panel {
-            background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--border-white); border-radius: 30px; padding: 20px;
-            margin-top: 10px; width: 100%;
+            background: var(--glass-bg); border-radius: 30px; padding: 20px;
+            margin-top: 20px; border: 1px solid var(--border-white);
         }
-
-        .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .cal-nav h2 { font-size: 1.1rem; color: var(--neon-yellow); margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-btn { background: #111; border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
-
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-        .weekday { font-size: 0.65rem; color: var(--neon-blue); font-weight: bold; text-align: center; padding-bottom: 8px; }
-        
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 15px; }
         .day-cell {
-            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 8px 4px;
-            min-height: 65px; border: 1px solid transparent; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; transition: 0.2s;
+            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 8px 0;
+            min-height: 60px; cursor: pointer; transition: 0.2s;
         }
-        .day-cell:hover { background: rgba(255,255,255,0.08); border-color: var(--neon-yellow); }
-        .day-cell.active { background: rgba(52, 168, 83, 0.15); border-color: var(--neon-green); box-shadow: 0 0 10px rgba(52, 168, 83, 0.3); }
-
-        .s-date { font-size: 1.2rem; font-weight: 800; }
-        .g-date { font-size: 0.6rem; color: #777; }
-        
-        .dot-box { display: flex; gap: 3px; margin-top: 4px; }
-        .dot { width: 5px; height: 5px; border-radius: 50%; }
-        .dot-user { background: var(--neon-green); box-shadow: 0 0 5px var(--neon-green); }
-        .dot-spcl { background: var(--neon-red); box-shadow: 0 0 5px var(--neon-red); }
+        .day-cell.active { border: 1px solid var(--neon-green); background: rgba(52, 168, 83, 0.1); }
 
         /* PLANNER SECTION */
         .planner-box {
@@ -107,26 +90,6 @@
             margin-top: 20px; padding: 20px; display: none; text-align: left;
             border-top: 4px solid var(--neon-blue);
         }
-        .planner-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-        .planner-header h3 { margin: 0; color: var(--neon-yellow); font-size: 1.1rem; }
-        .tithi-pill { background: var(--neon-blue); color: #000; padding: 3px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
-
-        .input-wrap { display: flex; gap: 8px; margin-bottom: 15px; }
-        .input-wrap input {
-            flex: 1; background: #111; border: 1px solid #333; color: #fff;
-            padding: 10px; border-radius: 10px; font-size: 0.9rem;
-        }
-        .add-task-btn { background: var(--neon-green); color: #000; border: none; padding: 0 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-
-        .event-list { list-style: none; padding: 0; margin: 0; }
-        .event-card {
-            background: rgba(255,255,255,0.04); padding: 12px; border-radius: 12px;
-            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
-            border-left: 3px solid var(--neon-green); font-size: 0.9rem;
-        }
-        .del-icon { color: var(--neon-red); background: none; border: none; cursor: pointer; font-size: 1rem; }
-
-        footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 4px; padding-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -137,55 +100,67 @@
         <h1>Abhinibesh Gupta</h1>
         <p class="tagline">Founder & CEO, NatNex Technologies</p>
 
-        <div class="action-grid">
-            <a href="tel:+91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fas fa-phone"></i></a>
-            <a href="https://wa.me/91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:contact@gogenixwebb.xyz" class="icon-box" style="color:var(--neon-red)"><i class="fas fa-envelope"></i></a>
-        </div>
-
         <div class="btn-list">
-            <a href="#" class="btn btn-blue"><i class="fas fa-user-plus"></i> Save Contact</a>
             <a href="https://in.linkedin.com/in/abhinibesh-gupta-758596265" target="_blank" class="btn btn-blue"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://instagram.com/abhinibeshgupta/" target="_blank" class="btn btn-red"><i class="fab fa-instagram"></i> Instagram</a>
             <a href="https://gogenixwebb.xyz" target="_blank" class="btn btn-yellow"><i class="fas fa-globe"></i> Website</a>
-            <div id="aptBtn" class="btn apt-btn" onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})"><i class="fas fa-calendar-check"></i> VIEW PLANNER</div>
+            <div class="btn apt-btn" onclick="openAptModal()"><i class="fas fa-calendar-check"></i> BOOK APPOINTMENT</div>
         </div>
     </div>
 
     <div class="saka-panel">
-        <div class="cal-nav">
-            <button class="nav-btn" onclick="navMonth(-1)">❮</button>
-            <h2 id="mTitle">CHAITRA</h2>
-            <button class="nav-btn" onclick="navMonth(1)">❯</button>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="navMonth(-1)" style="background:none; border:none; color:white; cursor:pointer;">❮</button>
+            <h2 id="mTitle" style="color:var(--neon-yellow); font-size: 1rem; margin:0;">CHAITRA</h2>
+            <button onclick="navMonth(1)" style="background:none; border:none; color:white; cursor:pointer;">❯</button>
         </div>
         <div class="calendar-grid" id="calGrid"></div>
     </div>
 
     <div class="planner-box" id="planner">
-        <div class="planner-header">
-            <div>
-                <h3 id="pSakaDate">Saka Date</h3>
-                <div id="pGregDate" style="font-size: 0.7rem; color: #666;">Gregorian</div>
-            </div>
-            <div id="pTithi" class="tithi-pill">Tithi</div>
+        <h3 id="pSakaDate" style="color:var(--neon-yellow); margin-bottom:10px;">Date</h3>
+        <div style="display:flex; gap:5px; margin-bottom:15px;">
+            <input type="text" id="taskInput" placeholder="Add private note..." style="flex:1; background:#111; border:1px solid #333; color:white; padding:10px; border-radius:10px;">
+            <button onclick="saveEvent()" style="background:var(--neon-green); border:none; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer;">ADD</button>
         </div>
-
-        <div class="input-wrap">
-            <input type="text" id="taskInput" placeholder="Add a private task...">
-            <button class="add-task-btn" onclick="saveEvent()">ADD</button>
-        </div>
-
-        <div id="taskList" class="event-list"></div>
+        <div id="taskList"></div>
     </div>
 
-    <footer>NATNEX • SMARD</footer>
+    <footer style="margin-top:40px; color:#444; font-size:0.7rem; letter-spacing:3px;">NATNEX • SMARD</footer>
+</div>
+
+<div id="aptModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Book Appointment</h3>
+        <input type="text" id="aptName" placeholder="Your Name">
+        <input type="text" id="aptTitle" placeholder="Meeting Title">
+        <div style="display:flex; gap:5px;">
+            <input type="date" id="aptDate">
+            <input type="time" id="aptTime">
+        </div>
+        <textarea id="aptDesc" rows="3" placeholder="Purpose..."></textarea>
+        <div style="display:flex; gap:10px;">
+            <button class="save-btn" style="background:#444; color:white;" onclick="closeAptModal()">Cancel</button>
+            <button class="save-btn" onclick="sendAptEmail()">OK</button>
+        </div>
+    </div>
 </div>
 
 <script>
-    let sIdx = 0; // Chaitra
-    let sYear = 2026;
-    let selectedId = null;
+    // Appointment Functions
+    function openAptModal() { document.getElementById('aptModal').style.display = 'flex'; }
+    function closeAptModal() { document.getElementById('aptModal').style.display = 'none'; }
+    function sendAptEmail() {
+        const name = document.getElementById('aptName').value;
+        const title = document.getElementById('aptTitle').value;
+        const date = document.getElementById('aptDate').value;
+        const time = document.getElementById('aptTime').value;
+        const body = `Meeting with ${name}%0AEvent: ${title}%0ADate: ${date}%0ATime: ${time}`;
+        window.location.href = `mailto:contact@gogenixwebb.xyz?subject=New Appointment&body=${body}`;
+        closeAptModal();
+    }
 
+    // Calendar Engine
+    let sIdx = 0; let sYear = 2026; let selectedId = null;
     const months = [
         { name: "Chaitra", days: 30, gStart: "03-22" }, { name: "Vaishakha", days: 31, gStart: "04-21" },
         { name: "Jyeshtha", days: 31, gStart: "05-22" }, { name: "Ashadha", days: 31, gStart: "06-22" },
@@ -194,107 +169,56 @@
         { name: "Agrahayana", days: 30, gStart: "11-22" }, { name: "Pausha", days: 30, gStart: "12-22" },
         { name: "Magha", days: 30, gStart: "01-21" }, { name: "Phalguna", days: 30, gStart: "02-20" }
     ];
-
     let myTasks = JSON.parse(localStorage.getItem('smard_tasks')) || {};
-
-    function getTithi(date) {
-        const lp = 2551443; const nm = new Date(2000, 0, 6, 18, 14, 0);
-        const age = ((date.getTime() - nm.getTime()) / 1000) % lp / (24 * 3600);
-        const tTotal = Math.floor((age / 29.53) * 30) + 1;
-        return `${tTotal <= 15 ? 'Shukla' : 'Krishna'} ${tTotal > 15 ? tTotal - 15 : tTotal}`;
-    }
 
     function render() {
         const grid = document.getElementById('calGrid');
         const m = months[sIdx];
         document.getElementById('mTitle').innerText = m.name.toUpperCase();
-
-        const startG = new Date(sYear, parseInt(m.gStart.split('-')[0])-1, parseInt(m.gStart.split('-')[1]));
-        grid.innerHTML = ['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => `<div class="weekday">${d}</div>`).join('');
+        grid.innerHTML = '';
         
+        const startG = new Date(sYear, parseInt(m.gStart.split('-')[0])-1, parseInt(m.gStart.split('-')[1]));
         for(let i=0; i<startG.getDay(); i++) grid.appendChild(document.createElement('div'));
 
         for(let d=1; d<=m.days; d++) {
             const gDate = new Date(startG); gDate.setDate(gDate.getDate() + (d-1));
             const id = `${sYear}-${sIdx}-${d}`;
-            const isSpcl = (sIdx === 0 && d === 1);
-            
             const cell = document.createElement('div');
             cell.className = `day-cell ${selectedId === id ? 'active' : ''}`;
-            
-            let dots = '';
-            if(isSpcl) dots += '<div class="dot dot-spcl"></div>';
-            if(myTasks[id] && myTasks[id].length > 0) dots += '<div class="dot dot-user"></div>';
-
-            cell.innerHTML = `
-                <div class="s-date">${d}</div>
-                <div class="g-date">${gDate.getDate()} ${gDate.toLocaleString('default',{month:'short'})}</div>
-                <div class="dot-box">${dots}</div>
-            `;
-
-            cell.onclick = () => selectDay(id, d, gDate);
+            cell.innerHTML = `<div style="font-weight:900;">${d}</div><div style="font-size:0.5rem; color:#666;">${gDate.getDate()}</div>`;
+            cell.onclick = () => {
+                selectedId = id;
+                document.getElementById('planner').style.display = 'block';
+                document.getElementById('pSakaDate').innerText = `${m.name} ${d}`;
+                render(); loadTasks();
+                document.getElementById('planner').scrollIntoView({ behavior: 'smooth' });
+            };
             grid.appendChild(cell);
         }
     }
 
-    function selectDay(id, d, gDate) {
-        selectedId = id;
-        const planner = document.getElementById('planner');
-        planner.style.display = 'block';
-        document.getElementById('pSakaDate').innerText = `${months[sIdx].name} ${d}`;
-        document.getElementById('pGregDate').innerText = gDate.toDateString();
-        document.getElementById('pTithi').innerText = getTithi(gDate);
-        render();
-        loadTasks();
-        planner.scrollIntoView({ behavior: 'smooth' });
-    }
-
     function saveEvent() {
         const val = document.getElementById('taskInput').value.trim();
-        if(!val || !selectedId) return;
+        if(!val) return;
         if(!myTasks[selectedId]) myTasks[selectedId] = [];
         myTasks[selectedId].push(val);
         localStorage.setItem('smard_tasks', JSON.stringify(myTasks));
         document.getElementById('taskInput').value = '';
         loadTasks();
-        render();
     }
 
     function loadTasks() {
         const list = document.getElementById('taskList');
         list.innerHTML = '';
-        
         if(selectedId && selectedId.endsWith('-0-1')) {
-            list.innerHTML += `<div class="event-card" style="border-left-color:var(--neon-red)">
-                <span style="font-weight:bold">🚩 Saka Navavarsh & Abhinibesh Birthday</span>
-            </div>`;
+            list.innerHTML += `<div style="padding:10px; background:#111; border-radius:8px; margin-bottom:5px; border-left:3px solid var(--neon-red);">🚩 Abhinibesh Birthday</div>`;
         }
-
-        const items = myTasks[selectedId] || [];
-        items.forEach((task, i) => {
-            list.innerHTML += `
-                <div class="event-card">
-                    <span>${task}</span>
-                    <button class="del-icon" onclick="deleteTask(${i})">✕</button>
-                </div>`;
+        (myTasks[selectedId] || []).forEach(t => {
+            list.innerHTML += `<div style="padding:10px; background:#111; border-radius:8px; margin-bottom:5px; border-left:3px solid var(--neon-green);">${t}</div>`;
         });
     }
 
-    function deleteTask(i) {
-        myTasks[selectedId].splice(i, 1);
-        localStorage.setItem('smard_tasks', JSON.stringify(myTasks));
-        loadTasks();
-        render();
-    }
-
-    function navMonth(dir) {
-        sIdx += dir;
-        if(sIdx > 11) { sIdx = 0; sYear++; }
-        if(sIdx < 0) { sIdx = 11; sYear--; }
-        document.getElementById('planner').style.display = 'none';
-        render();
-    }
-
+    function navMonth(dir) { sIdx += dir; if(sIdx > 11) { sIdx = 0; sYear++; } if(sIdx < 0) { sIdx = 11; sYear--; } render(); }
     render();
 </script>
 </body>
