@@ -7,104 +7,126 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --neon-blue: #00d2ff;
+            --neon-blue: #4285f4;
+            --neon-red: #ea4335;
+            --neon-yellow: #fbbc05;
+            --neon-green: #34a853;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --border-white: rgba(255, 255, 255, 0.15);
-            --whatsapp: #25D366; --linkedin: #0077b5; --instagram: #E1306C;
-            --website: #00d2ff; --phone: #4CAF50; --mail: #EA4335;
         }
 
         * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
 
         body {
-            margin: 0; background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+            margin: 0; background: radial-gradient(circle at center, #101010 0%, #000 100%);
             color: #fff; font-family: 'Inter', sans-serif; display: flex;
-            justify-content: center; min-height: 100vh; padding: 20px 0;
+            flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 0;
+            scroll-behavior: smooth;
         }
 
-        .card-container { width: 95%; max-width: 400px; text-align: center; }
+        .card-container { width: 95%; max-width: 420px; text-align: center; }
 
+        /* Profile Card */
         .profile-card {
             background: var(--glass-bg); backdrop-filter: blur(20px);
             border: 1px solid var(--border-white); border-radius: 30px;
-            padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); margin-bottom: 20px;
+            padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); margin-bottom: 25px;
         }
 
         .avatar {
             width: 110px; height: 110px; border-radius: 50%;
             border: 3px solid var(--neon-blue); margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 20px rgba(66, 133, 244, 0.5);
         }
 
-        h1 { font-size: 1.6rem; margin: 0 0 5px; }
-        .tagline { font-size: 0.85rem; color: #888; margin-bottom: 25px; }
+        h1 { font-size: 1.6rem; margin: 0 0 5px; color: #fff; }
+        .tagline { font-size: 0.85rem; color: #aaa; margin-bottom: 25px; }
 
+        /* Action Buttons */
         .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
         .icon-box {
-            background: var(--glass-bg); border: 1px solid var(--border-white);
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-white);
             padding: 18px; border-radius: 20px; color: #fff; text-decoration: none;
-            transition: all 0.4s ease; font-size: 1.3rem;
+            transition: 0.3s; font-size: 1.3rem;
         }
-        .icon-box:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
+        .icon-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
 
         .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .btn {
             background: var(--glass-bg); border: 1px solid var(--border-white);
             padding: 16px; border-radius: 18px; color: white;
             text-decoration: none; display: flex; align-items: center; gap: 15px;
-            font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+            font-weight: 600; transition: 0.3s;
         }
-        .btn i { width: 25px; font-size: 1.2rem; }
-        .btn:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
+        .btn:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
 
-        /* Appointment Button Styling */
-        .apt-btn { background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%); border: none !important; justify-content: center; }
-
-        /* TO-DO PANEL */
-        .todo-panel {
-            background: var(--glass-bg); backdrop-filter: blur(25px);
-            border: 1px solid var(--border-white); border-radius: 30px; padding: 25px; margin-top: 20px;
-        }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .calendar-nav { display: flex; align-items: center; gap: 10px; }
-        .calendar-nav h2 { font-size: 0.9rem; color: var(--neon-blue); margin: 0; text-transform: uppercase; width: 120px; }
+        /* Google Glow Buttons */
+        .btn-blue { border-left: 4px solid var(--neon-blue); }
+        .btn-red { border-left: 4px solid var(--neon-red); }
+        .btn-green { border-left: 4px solid var(--neon-green); }
+        .btn-yellow { border-left: 4px solid var(--neon-yellow); }
         
-        .nav-btn, .add-task-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-white);
-            color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer;
+        .apt-btn { 
+            background: linear-gradient(90deg, var(--neon-blue), #1a73e8); 
+            border: none; justify-content: center; box-shadow: 0 0 15px rgba(66, 133, 244, 0.4);
         }
-        .add-task-btn { background: var(--neon-blue); color: #000; font-weight: bold; border: none; }
 
-        .event-item {
-            background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 18px;
-            margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+        /* CALENDAR SYSTEM */
+        .saka-panel {
+            background: var(--glass-bg); backdrop-filter: blur(25px);
+            border: 1px solid var(--border-white); border-radius: 30px; padding: 20px;
+            margin-top: 10px; width: 100%;
         }
-        .event-content { flex: 1; text-align: left; }
-        .event-title { font-weight: bold; color: var(--neon-blue); }
-        .event-date { font-size: 0.7rem; color: #666; margin-top: 4px; }
-        .delete-btn { color: #ff4d4d; background: none; border: none; cursor: pointer; }
 
-        /* Modals (Shared Styles) */
-        .modal-overlay {
-            display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center;
-            backdrop-filter: blur(10px);
-        }
-        .modal-content {
-            background: #1a1a2e; padding: 25px; border-radius: 25px; 
-            border: 1px solid var(--border-white); width: 90%; max-width: 380px;
-        }
-        .modal-content h3 { margin-top:0; color:var(--neon-blue); font-size: 1.2rem; }
-        .modal-content input, .modal-content textarea {
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px;
-            border: 1px solid var(--border-white); background: rgba(255,255,255,0.05); color: white;
-            font-family: inherit;
-        }
-        .modal-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .save-btn { flex: 1; background: var(--neon-blue); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .cancel-btn { flex: 1; background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 12px; border-radius: 10px; cursor: pointer; }
+        .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cal-nav h2 { font-size: 1.1rem; color: var(--neon-yellow); margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-btn { background: #111; border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
 
-        footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 4px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+        .weekday { font-size: 0.65rem; color: var(--neon-blue); font-weight: bold; text-align: center; padding-bottom: 8px; }
+        
+        .day-cell {
+            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 8px 4px;
+            min-height: 65px; border: 1px solid transparent; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; transition: 0.2s;
+        }
+        .day-cell:hover { background: rgba(255,255,255,0.08); border-color: var(--neon-yellow); }
+        .day-cell.active { background: rgba(52, 168, 83, 0.15); border-color: var(--neon-green); box-shadow: 0 0 10px rgba(52, 168, 83, 0.3); }
+
+        .s-date { font-size: 1.2rem; font-weight: 800; }
+        .g-date { font-size: 0.6rem; color: #777; }
+        
+        .dot-box { display: flex; gap: 3px; margin-top: 4px; }
+        .dot { width: 5px; height: 5px; border-radius: 50%; }
+        .dot-user { background: var(--neon-green); box-shadow: 0 0 5px var(--neon-green); }
+        .dot-spcl { background: var(--neon-red); box-shadow: 0 0 5px var(--neon-red); }
+
+        /* PLANNER SECTION */
+        .planner-box {
+            background: #000; border: 1px solid var(--border-white); border-radius: 25px;
+            margin-top: 20px; padding: 20px; display: none; text-align: left;
+            border-top: 4px solid var(--neon-blue);
+        }
+        .planner-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .planner-header h3 { margin: 0; color: var(--neon-yellow); font-size: 1.1rem; }
+        .tithi-pill { background: var(--neon-blue); color: #000; padding: 3px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
+
+        .input-wrap { display: flex; gap: 8px; margin-bottom: 15px; }
+        .input-wrap input {
+            flex: 1; background: #111; border: 1px solid #333; color: #fff;
+            padding: 10px; border-radius: 10px; font-size: 0.9rem;
+        }
+        .add-task-btn { background: var(--neon-green); color: #000; border: none; padding: 0 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+        .event-list { list-style: none; padding: 0; margin: 0; }
+        .event-card {
+            background: rgba(255,255,255,0.04); padding: 12px; border-radius: 12px;
+            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+            border-left: 3px solid var(--neon-green); font-size: 0.9rem;
+        }
+        .del-icon { color: var(--neon-red); background: none; border: none; cursor: pointer; font-size: 1rem; }
+
+        footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 4px; padding-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -116,65 +138,164 @@
         <p class="tagline">Founder & CEO, NatNex Technologies</p>
 
         <div class="action-grid">
-            <a id="phoneBtn" href="#" class="icon-box"><i class="fas fa-phone"></i></a>
-            <a id="waBtn" href="#" class="icon-box"><i class="fab fa-whatsapp"></i></a>
-            <a id="mailBtn" href="#" class="icon-box"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fas fa-phone"></i></a>
+            <a href="https://wa.me/91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:contact@gogenixwebb.xyz" class="icon-box" style="color:var(--neon-red)"><i class="fas fa-envelope"></i></a>
         </div>
 
         <div class="btn-list">
-            <a href="#" class="btn" id="saveContact"><i class="fas fa-user-plus"></i> Save Contact</a>
-            <a href="https://in.linkedin.com/in/abhinibesh-gupta-758596265" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://instagram.com/abhinibeshgupta/" target="_blank" class="btn"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="https://gogenixwebb.xyz" target="_blank" class="btn"><i class="fas fa-globe"></i> Website</a>
-            <div id="aptBtn" class="btn apt-btn"><i class="fas fa-calendar-check"></i> APPOINTMENT</div>
+            <a href="#" class="btn btn-blue"><i class="fas fa-user-plus"></i> Save Contact</a>
+            <a href="https://in.linkedin.com/in/abhinibesh-gupta-758596265" target="_blank" class="btn btn-blue"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://instagram.com/abhinibeshgupta/" target="_blank" class="btn btn-red"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://gogenixwebb.xyz" target="_blank" class="btn btn-yellow"><i class="fas fa-globe"></i> Website</a>
+            <div id="aptBtn" class="btn apt-btn" onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})"><i class="fas fa-calendar-check"></i> VIEW PLANNER</div>
         </div>
     </div>
 
-    <div class="todo-panel">
-        <div class="calendar-header">
-            <div class="calendar-nav">
-                <button class="nav-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                <h2 id="monthDisplay">MONTH YEAR</h2>
-                <button class="nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <button class="add-task-btn" onclick="openTodoModal()"><i class="fas fa-plus"></i></button>
+    <div class="saka-panel">
+        <div class="cal-nav">
+            <button class="nav-btn" onclick="navMonth(-1)">❮</button>
+            <h2 id="mTitle">CHAITRA</h2>
+            <button class="nav-btn" onclick="navMonth(1)">❯</button>
         </div>
-        <div id="eventContainer"></div>
+        <div class="calendar-grid" id="calGrid"></div>
+    </div>
+
+    <div class="planner-box" id="planner">
+        <div class="planner-header">
+            <div>
+                <h3 id="pSakaDate">Saka Date</h3>
+                <div id="pGregDate" style="font-size: 0.7rem; color: #666;">Gregorian</div>
+            </div>
+            <div id="pTithi" class="tithi-pill">Tithi</div>
+        </div>
+
+        <div class="input-wrap">
+            <input type="text" id="taskInput" placeholder="Add a private task...">
+            <button class="add-task-btn" onclick="saveEvent()">ADD</button>
+        </div>
+
+        <div id="taskList" class="event-list"></div>
     </div>
 
     <footer>NATNEX • SMARD</footer>
 </div>
 
-<div id="todoModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3>New Personal Task</h3>
-        <input type="text" id="todoTitle" placeholder="Task Name">
-        <input type="date" id="todoDate">
-        <input type="time" id="todoTime">
-        <div class="modal-actions">
-            <button class="cancel-btn" onclick="closeTodoModal()">Cancel</button>
-            <button class="save-btn" onclick="saveNewTodo()">Save</button>
-        </div>
-    </div>
-</div>
+<script>
+    let sIdx = 0; // Chaitra
+    let sYear = 2026;
+    let selectedId = null;
 
-<div id="aptModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3>Book Appointment</h3>
-        <input type="text" id="aptName" placeholder="Your Full Name">
-        <input type="text" id="aptTitle" placeholder="Meeting Title">
-        <div style="display:flex; gap:10px;">
-            <input type="date" id="aptDate">
-            <input type="time" id="aptTime">
-        </div>
-        <textarea id="aptDesc" rows="3" placeholder="Description/Purpose of meeting"></textarea>
-        <div class="modal-actions">
-            <button class="cancel-btn" onclick="closeAptModal()">Cancel</button>
-            <button class="save-btn" onclick="sendAptEmail()">OK</button>
-        </div>
-    </div>
-</div>
+    const months = [
+        { name: "Chaitra", days: 30, gStart: "03-22" }, { name: "Vaishakha", days: 31, gStart: "04-21" },
+        { name: "Jyeshtha", days: 31, gStart: "05-22" }, { name: "Ashadha", days: 31, gStart: "06-22" },
+        { name: "Shravana", days: 31, gStart: "07-23" }, { name: "Bhadrapada", days: 31, gStart: "08-23" },
+        { name: "Ashwina", days: 30, gStart: "09-23" }, { name: "Kartika", days: 30, gStart: "10-23" },
+        { name: "Agrahayana", days: 30, gStart: "11-22" }, { name: "Pausha", days: 30, gStart: "12-22" },
+        { name: "Magha", days: 30, gStart: "01-21" }, { name: "Phalguna", days: 30, gStart: "02-20" }
+    ];
 
-<script src="config.js"></script>
+    let myTasks = JSON.parse(localStorage.getItem('smard_tasks')) || {};
+
+    function getTithi(date) {
+        const lp = 2551443; const nm = new Date(2000, 0, 6, 18, 14, 0);
+        const age = ((date.getTime() - nm.getTime()) / 1000) % lp / (24 * 3600);
+        const tTotal = Math.floor((age / 29.53) * 30) + 1;
+        return `${tTotal <= 15 ? 'Shukla' : 'Krishna'} ${tTotal > 15 ? tTotal - 15 : tTotal}`;
+    }
+
+    function render() {
+        const grid = document.getElementById('calGrid');
+        const m = months[sIdx];
+        document.getElementById('mTitle').innerText = m.name.toUpperCase();
+
+        const startG = new Date(sYear, parseInt(m.gStart.split('-')[0])-1, parseInt(m.gStart.split('-')[1]));
+        grid.innerHTML = ['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => `<div class="weekday">${d}</div>`).join('');
+        
+        for(let i=0; i<startG.getDay(); i++) grid.appendChild(document.createElement('div'));
+
+        for(let d=1; d<=m.days; d++) {
+            const gDate = new Date(startG); gDate.setDate(gDate.getDate() + (d-1));
+            const id = `${sYear}-${sIdx}-${d}`;
+            const isSpcl = (sIdx === 0 && d === 1);
+            
+            const cell = document.createElement('div');
+            cell.className = `day-cell ${selectedId === id ? 'active' : ''}`;
+            
+            let dots = '';
+            if(isSpcl) dots += '<div class="dot dot-spcl"></div>';
+            if(myTasks[id] && myTasks[id].length > 0) dots += '<div class="dot dot-user"></div>';
+
+            cell.innerHTML = `
+                <div class="s-date">${d}</div>
+                <div class="g-date">${gDate.getDate()} ${gDate.toLocaleString('default',{month:'short'})}</div>
+                <div class="dot-box">${dots}</div>
+            `;
+
+            cell.onclick = () => selectDay(id, d, gDate);
+            grid.appendChild(cell);
+        }
+    }
+
+    function selectDay(id, d, gDate) {
+        selectedId = id;
+        const planner = document.getElementById('planner');
+        planner.style.display = 'block';
+        document.getElementById('pSakaDate').innerText = `${months[sIdx].name} ${d}`;
+        document.getElementById('pGregDate').innerText = gDate.toDateString();
+        document.getElementById('pTithi').innerText = getTithi(gDate);
+        render();
+        loadTasks();
+        planner.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function saveEvent() {
+        const val = document.getElementById('taskInput').value.trim();
+        if(!val || !selectedId) return;
+        if(!myTasks[selectedId]) myTasks[selectedId] = [];
+        myTasks[selectedId].push(val);
+        localStorage.setItem('smard_tasks', JSON.stringify(myTasks));
+        document.getElementById('taskInput').value = '';
+        loadTasks();
+        render();
+    }
+
+    function loadTasks() {
+        const list = document.getElementById('taskList');
+        list.innerHTML = '';
+        
+        if(selectedId && selectedId.endsWith('-0-1')) {
+            list.innerHTML += `<div class="event-card" style="border-left-color:var(--neon-red)">
+                <span style="font-weight:bold">🚩 Saka Navavarsh & Abhinibesh Birthday</span>
+            </div>`;
+        }
+
+        const items = myTasks[selectedId] || [];
+        items.forEach((task, i) => {
+            list.innerHTML += `
+                <div class="event-card">
+                    <span>${task}</span>
+                    <button class="del-icon" onclick="deleteTask(${i})">✕</button>
+                </div>`;
+        });
+    }
+
+    function deleteTask(i) {
+        myTasks[selectedId].splice(i, 1);
+        localStorage.setItem('smard_tasks', JSON.stringify(myTasks));
+        loadTasks();
+        render();
+    }
+
+    function navMonth(dir) {
+        sIdx += dir;
+        if(sIdx > 11) { sIdx = 0; sYear++; }
+        if(sIdx < 0) { sIdx = 11; sYear--; }
+        document.getElementById('planner').style.display = 'none';
+        render();
+    }
+
+    render();
+</script>
 </body>
 </html>
