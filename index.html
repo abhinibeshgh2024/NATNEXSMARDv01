@@ -1,254 +1,348 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMARD | Abhinibesh Gupta</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Abhinibesh Gupta | Operational Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root {
-            --neon-blue: #4285f4; --neon-red: #ea4335; --neon-yellow: #fbbc05; --neon-green: #34a853;
-            --glass: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.15);
-        }
-
-        * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
-
-        body {
-            margin: 0; background: radial-gradient(circle at center, #111 0%, #000 100%);
-            color: #fff; font-family: 'Inter', sans-serif; display: flex;
-            flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 0;
-            scroll-behavior: smooth;
-        }
-
-        .card-container { width: 95%; max-width: 420px; text-align: center; }
-
-        /* Profile Card */
-        .profile-card {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 30px;
-            padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); margin-bottom: 25px;
-        }
-
-        .avatar {
-            width: 110px; height: 110px; border-radius: 50%;
-            border: 3px solid var(--neon-blue); margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(66, 133, 244, 0.4);
-        }
-
-        h1 { font-size: 1.6rem; margin: 0 0 5px; }
-        .tagline { font-size: 0.85rem; color: #aaa; margin-bottom: 25px; }
-
-        /* Action Grid (Phone, WA, Mail) */
-        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .icon-box {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 18px; border-radius: 20px; color: #fff; text-decoration: none;
-            transition: 0.3s; font-size: 1.3rem;
-        }
-        .icon-box:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
-
-        /* Button List */
-        .btn-list { display: flex; flex-direction: column; gap: 12px; }
-        .btn {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 16px; border-radius: 18px; color: white;
-            text-decoration: none; display: flex; align-items: center; gap: 15px;
-            font-weight: 600; transition: 0.3s; cursor: pointer;
-        }
-        .btn:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
-        .btn-blue { border-left: 4px solid var(--neon-blue); }
-        .btn-red { border-left: 4px solid var(--neon-red); }
-        .btn-yellow { border-left: 4px solid var(--neon-yellow); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        .apt-btn { 
-            background: linear-gradient(90deg, var(--neon-blue), #1a73e8); 
-            border: none; justify-content: center; box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow-x: hidden; }
+        .nato-blue { background-color: #004990; }
+        .text-nato-blue { color: #004990; }
+        .glass { background: rgba(0, 73, 144, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+        .natnex-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #38bdf8, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
         }
 
-        /* Calendar Hover Glow */
-        .saka-panel {
-            background: var(--glass); border-radius: 30px; padding: 20px;
-            margin-top: 10px; border: 1px solid var(--border); width: 100%;
-        }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 15px; }
-        .day-cell {
-            background: rgba(255,255,255,0.03); border-radius: 12px; padding: 10px 0;
-            min-height: 65px; cursor: pointer; transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-        .day-cell:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(66, 133, 244, 0.4);
-            background: rgba(66, 133, 244, 0.1);
-            transform: scale(1.05);
-        }
-        .day-cell.active { border-color: var(--neon-green); background: rgba(52, 168, 83, 0.15); }
-
-        /* Planner Hover Glow */
-        .planner-box {
-            background: #000; border: 1px solid var(--border); border-radius: 25px;
-            margin-top: 20px; padding: 25px; display: none; text-align: left;
-            border-top: 4px solid var(--neon-blue);
-        }
-        .event-card {
-            background: rgba(255,255,255,0.04); padding: 15px; border-radius: 15px;
-            margin-bottom: 10px; border-left: 4px solid var(--neon-green);
-            transition: 0.3s; cursor: default;
-        }
-        .event-card:hover {
-            box-shadow: 0 0 15px rgba(52, 168, 83, 0.3);
-            background: rgba(255,255,255,0.08);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.9); z-index:2000; justify-content:center; align-items:center;
-            backdrop-filter: blur(10px);
-        }
-        .modal-content {
-            background: #111; padding: 30px; border-radius: 25px; 
-            border: 1px solid var(--border); width: 90%; max-width: 380px;
-        }
-        .modal-content input, .modal-content textarea {
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px;
-            border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white;
+        #progress-bar { height: 3px; background: #38bdf8; width: 0%; position: absolute; bottom: 0; left: 0; transition: width 0.1s ease-out; }
+        .animate-spin-slow { animation: spin 12s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .pulse-bt { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
     </style>
 </head>
-<body>
+<body class="text-slate-900 selection:bg-sky-500 selection:text-white">
 
-<div class="card-container">
-    <div class="profile-card">
-        <img src="abhimage.jpg" alt="Abhinibesh" class="avatar">
-        <h1>Abhinibesh Gupta</h1>
-        <p class="tagline">Founder & CEO, NatNex Technologies</p>
-
-        <div class="action-grid">
-            <a href="tel:+91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fas fa-phone"></i></a>
-            <a href="https://wa.me/91XXXXXXXXXX" class="icon-box" style="color:var(--neon-green)"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:contact@gogenixwebb.xyz" class="icon-box" style="color:var(--neon-red)"><i class="fas fa-envelope"></i></a>
-        </div>
-
-        <div class="btn-list">
-            <a href="#" class="btn btn-blue"><i class="fas fa-user-plus"></i> Save Contact</a>
-            <a href="https://in.linkedin.com/in/abhinibesh-gupta-758596265" target="_blank" class="btn btn-blue"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://instagram.com/abhinibeshgupta/" target="_blank" class="btn btn-red"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="https://gogenixwebb.xyz" target="_blank" class="btn btn-yellow"><i class="fas fa-globe"></i> Website</a>
-            <div class="btn apt-btn" onclick="openAptModal()"><i class="fas fa-calendar-check"></i> BOOK APPOINTMENT</div>
-        </div>
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-[#004990] hidden flex-col items-center justify-center gap-8 text-white font-black uppercase tracking-widest text-xl p-6">
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="#profile" onclick="toggleMenu()" class="hover:text-sky-300">Tactical Info</a>
+        <a href="#institution" onclick="toggleMenu()" class="hover:text-sky-300">Institutions</a>
+        <a href="#ops" onclick="toggleMenu()" class="hover:text-sky-300">Operations</a>
+        <a href="#intel-feed" onclick="toggleMenu()" class="hover:text-sky-300">Global Feed</a>
+        <a href="#stack" onclick="toggleMenu()" class="hover:text-sky-300">Capabilities</a>
     </div>
 
-    <div class="saka-panel">
-        <div style="display:flex; justify-content: space-between; align-items:center;">
-            <button onclick="navMonth(-1)" style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">❮</button>
-            <h2 id="mTitle" style="color:var(--neon-yellow); font-size: 1.1rem; margin:0; letter-spacing:2px;">CHAITRA</h2>
-            <button onclick="navMonth(1)" style="background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">❯</button>
-        </div>
-        <div class="calendar-grid" id="calGrid"></div>
+    <div class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3">
+        <a href="https://wa.me/919142543191" target="_blank" class="bg-emerald-500 text-white p-4 rounded-full shadow-2xl pulse-bt border border-white/20">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </a>
+        <a href="mailto:nexpploro@gmail.com" class="bg-[#004990] text-white p-4 rounded-full shadow-2xl border border-white/20">
+            <i data-lucide="mail" class="w-6 h-6"></i>
+        </a>
     </div>
 
-    <div class="planner-box" id="planner">
-        <h3 id="pSakaDate" style="color:var(--neon-yellow); margin:0 0 15px 0;">Date</h3>
-        <div style="display:flex; gap:8px; margin-bottom:20px;">
-            <input type="text" id="taskInput" placeholder="Add private note..." style="flex:1; background:#111; border:1px solid #333; color:white; padding:12px; border-radius:12px;">
-            <button onclick="saveEvent()" style="background:var(--neon-green); border:none; padding:0 15px; border-radius:12px; font-weight:bold; cursor:pointer; color:#000;">ADD</button>
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 nato-blue border-b border-white/10 py-4 md:py-5">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-white text-[#004990] font-black px-2 py-1 text-lg md:text-xl tracking-tighter shadow-lg">AG</div>
+                <div class="block">
+                    <h1 class="text-white font-bold text-xs md:text-sm tracking-widest uppercase">Abhinibesh Gupta</h1>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                        <span class="text-white/60 text-[9px] md:text-[10px] uppercase font-bold tracking-tighter text-sky-200">System: Operational</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex items-center gap-8 text-white/80 text-[11px] font-black uppercase tracking-[0.2em]">
+                <a href="#profile" class="hover:text-sky-300 transition-colors">Tactical Info</a>
+                <a href="#institution" class="hover:text-sky-300 transition-colors">Institutions</a>
+                <a href="#ops" class="hover:text-sky-300 transition-colors">Operations</a>
+                <a href="#intel-feed" class="text-sky-400 hover:text-white transition-colors">Global Feed</a>
+                <a href="#stack" class="hover:text-sky-300 transition-colors">Capabilities</a>
+            </div>
+
+            <button onclick="toggleMenu()" class="lg:hidden text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
-        <div id="taskList"></div>
-    </div>
+        <div id="progress-bar"></div>
+    </nav>
 
-    <footer style="margin-top:40px; color:#333; font-size:0.7rem; letter-spacing:4px; padding-bottom:30px;">NATNEX • SMARD</footer>
-</div>
-
-<div id="aptModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3>Book Appointment</h3>
-        <input type="text" id="aptName" placeholder="Your Name">
-        <input type="text" id="aptTitle" placeholder="Meeting Title">
-        <div style="display:flex; gap:8px;">
-            <input type="date" id="aptDate">
-            <input type="time" id="aptTime">
+    <section class="pt-32 md:pt-48 pb-12 md:pb-24 nato-blue text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 relative z-10">
+            <div class="text-center lg:text-left">
+                <div class="inline-block px-3 py-1 border border-sky-400 text-sky-400 text-[10px] font-black uppercase tracking-[0.3em] mb-6">
+                    Classified: Professional Briefing FY-2026
+                </div>
+                <h2 class="text-4xl sm:text-5xl md:text-8xl font-black leading-tight md:leading-none mb-8 tracking-tighter uppercase">
+                    Engineering <br><span class="text-sky-400 font-black">Intelligent</span> Systems.
+                </h2>
+                <p class="text-lg md:text-xl text-white/70 max-w-xl mx-auto lg:mx-0 mb-10 font-light italic">
+                    Founder of <span class="text-white font-bold underline decoration-sky-400 underline-offset-4">NatNex Technologies</span>. Architecting Ether 1.0.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#ops" class="bg-white text-[#004990] px-8 py-4 font-black uppercase text-[10px] tracking-[0.2em] hover:bg-sky-100 transition-all text-center">
+                        Active Operations
+                    </a>
+                </div>
+            </div>
+            <div class="hidden lg:flex justify-center items-center">
+                <div class="w-64 h-64 md:w-96 md:h-96 border border-white/10 rounded-full flex items-center justify-center relative">
+                    <div class="absolute inset-0 animate-spin-slow opacity-20">
+                        <i data-lucide="shield" class="w-full h-full text-white p-20"></i>
+                    </div>
+                    <i data-lucide="cpu" class="w-24 h-24 md:w-32 md:h-32 text-sky-400 animate-pulse"></i>
+                </div>
+            </div>
         </div>
-        <textarea id="aptDesc" rows="3" placeholder="Purpose of meeting..."></textarea>
-        <div style="display:flex; gap:10px; margin-top:10px;">
-            <button style="flex:1; background:#333; color:white; border:none; padding:12px; border-radius:12px; cursor:pointer;" onclick="closeAptModal()">Cancel</button>
-            <button style="flex:1; background:var(--neon-blue); color:white; border:none; padding:12px; border-radius:12px; font-weight:bold; cursor:pointer;" onclick="sendAptEmail()">Send</button>
+    </section>
+
+    <section id="profile" class="py-12 md:py-20 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto bg-white border border-slate-200 shadow-2xl flex flex-col lg:flex-row">
+            <div class="lg:w-1/3 bg-slate-200 aspect-square lg:aspect-auto min-h-[300px] relative">
+                <img src="abhimage.jpg" alt="Abhinibesh Gupta" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="absolute bottom-0 w-full bg-[#004990]/80 p-4 text-center text-white text-[10px] font-black uppercase tracking-[0.3em]">Identity Confirmed // AG-2026</div>
+            </div>
+            <div class="lg:w-2/3 p-6 md:p-12">
+                <h3 class="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-8 border-b-4 border-[#004990] inline-block">Abhinibesh Gupta</h3>
+                <div class="grid sm:grid-cols-2 gap-6 md:gap-8">
+                    <div class="space-y-4 md:space-y-6">
+                        <div>
+                            <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Primary Intel</p>
+                            <p class="font-bold text-slate-700 text-sm md:text-base">nexpploro@gmail.com</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Secondary Intel</p>
+                            <p class="font-bold text-slate-700 text-sm md:text-base">infostarmedia133@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 md:space-y-6">
+                        <div>
+                            <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Secure Line</p>
+                            <p class="font-bold text-slate-700 text-sm md:text-base">+91 9142543191</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Operational HQ</p>
+                            <p class="font-bold text-slate-700 text-sm md:text-base">Ranchi, Jharkhand, India</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<script>
-    function openAptModal() { document.getElementById('aptModal').style.display = 'flex'; }
-    function closeAptModal() { document.getElementById('aptModal').style.display = 'none'; }
-    function sendAptEmail() {
-        const n = document.getElementById('aptName').value;
-        const t = document.getElementById('aptTitle').value;
-        const d = document.getElementById('aptDate').value;
-        const b = `Meeting: ${t}%0ADate: ${d}%0AFrom: ${n}`;
-        window.location.href = `mailto:contact@gogenixwebb.xyz?subject=Appointment Request&body=${b}`;
-        closeAptModal();
-    }
+    <section id="institution" class="py-16 md:py-24 bg-white border-b border-slate-100 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 md:gap-12">
+            <div class="lg:col-span-3">
+                <h3 class="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tighter">Institutional <br>Authority</h3>
+            </div>
+            <div class="lg:col-span-9 space-y-6 md:space-y-8">
+                <div class="bg-slate-50 border-l-8 border-[#004990] p-6 md:p-8">
+                    <div class="flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <h4 class="text-xl md:text-2xl font-black text-[#004990] uppercase leading-tight">Usha Martin University</h4>
+                            <p class="text-slate-500 font-bold text-[10px] uppercase tracking-widest italic">Bachelor of Technology (CSE)</p>
+                        </div>
+                        <div class="md:text-right">
+                            <span class="text-sm font-black text-[#004990]">GPA: 7.5</span>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">2023 — 2027</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 border-l-8 border-slate-300 p-6 md:p-8">
+                    <div class="flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <h4 class="text-xl md:text-2xl font-black text-slate-700 uppercase leading-tight">BSK College Maithon</h4>
+                            <p class="text-slate-500 font-bold text-[10px] uppercase tracking-widest italic">Foundational Studies</p>
+                        </div>
+                        <div class="md:text-right">
+                            <span class="text-sm font-black text-slate-700">GPA: 7.0</span>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">2021 — 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    let sIdx = 0; let sYear = 2026; let selectedId = null;
-    const months = [
-        { name: "Chaitra", days: 30, gStart: "03-22" }, { name: "Vaishakha", days: 31, gStart: "04-21" },
-        { name: "Jyeshtha", days: 31, gStart: "05-22" }, { name: "Ashadha", days: 31, gStart: "06-22" },
-        { name: "Shravana", days: 31, gStart: "07-23" }, { name: "Bhadrapada", days: 31, gStart: "08-23" },
-        { name: "Ashwina", days: 30, gStart: "09-23" }, { name: "Kartika", days: 30, gStart: "10-23" },
-        { name: "Agrahayana", days: 30, gStart: "11-22" }, { name: "Pausha", days: 30, gStart: "12-22" },
-        { name: "Magha", days: 30, gStart: "01-21" }, { name: "Phalguna", days: 30, gStart: "02-20" }
-    ];
-    let myTasks = JSON.parse(localStorage.getItem('smard_tasks')) || {};
+    <section id="ops" class="py-16 md:py-32 px-6 max-w-7xl mx-auto">
+        <div class="mb-12 md:mb-20 border-l-8 border-[#004990] pl-6 md:pl-8">
+            <h3 class="text-[10px] font-black text-[#004990] uppercase tracking-[0.4em] mb-2">Registry: FY-2026</h3>
+            <h4 class="text-3xl md:text-5xl font-black text-slate-900 uppercase">Strategic Operations</h4>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+            <div class="group bg-white border border-slate-200 p-8 md:p-10 hover:shadow-2xl hover:border-[#004990] transition-all">
+                <i data-lucide="brain-circuit" class="w-8 h-8 md:w-10 md:h-10 text-[#004990] mb-6"></i>
+                <h5 class="text-xl md:text-2xl font-black mb-3 uppercase tracking-tight">Ether 1.0</h5>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Building a foundational intelligence system for cross-platform automation.</p>
+                <div class="text-[9px] font-black uppercase text-[#004990] tracking-widest italic">Status: In-Development</div>
+            </div>
+            <div class="group bg-white border border-slate-200 p-8 md:p-10 hover:shadow-2xl hover:border-[#004990] transition-all">
+                <i data-lucide="plane" class="w-8 h-8 md:w-10 md:h-10 text-[#004990] mb-6"></i>
+                <h5 class="text-xl md:text-2xl font-black mb-3 uppercase tracking-tight">IACRF Framework</h5>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Autonomous civil response frameworks using drone swarm simulation.</p>
+                <div class="text-[9px] font-black uppercase text-[#004990] tracking-widest italic">Status: Active Simulation</div>
+            </div>
+            <div class="group bg-white border border-slate-200 p-8 md:p-10 hover:shadow-2xl hover:border-[#004990] transition-all">
+                <i data-lucide="fingerprint" class="w-8 h-8 md:w-10 md:h-10 text-[#004990] mb-6"></i>
+                <h5 class="text-xl md:text-2xl font-black mb-3 uppercase tracking-tight">Forensics AI</h5>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Advanced neural modeling for identifying synthetic media and deepfakes.</p>
+                <div class="text-[9px] font-black uppercase text-[#004990] tracking-widest italic">Status: Research Phase</div>
+            </div>
+        </div>
+    </section>
 
-    function render() {
-        const grid = document.getElementById('calGrid');
-        const m = months[sIdx];
-        document.getElementById('mTitle').innerText = m.name.toUpperCase();
-        grid.innerHTML = '';
-        const startG = new Date(sYear, parseInt(m.gStart.split('-')[0])-1, parseInt(m.gStart.split('-')[1]));
-        for(let i=0; i<startG.getDay(); i++) grid.appendChild(document.createElement('div'));
+    <section id="intel-feed" class="py-16 md:py-24 bg-slate-900 text-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-4 mb-8 md:mb-12">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-sky-500 rounded flex items-center justify-center">
+                    <i data-lucide="terminal" class="text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl md:text-3xl font-black uppercase tracking-tighter">Global Intel Feed</h3>
+                    <p class="text-[9px] font-mono text-sky-400 tracking-widest uppercase">Direct Transmission</p>
+                </div>
+            </div>
 
-        for(let d=1; d<=m.days; d++) {
-            const gDate = new Date(startG); gDate.setDate(gDate.getDate() + (d-1));
-            const id = `${sYear}-${sIdx}-${d}`;
-            const cell = document.createElement('div');
-            cell.className = `day-cell ${selectedId === id ? 'active' : ''}`;
-            cell.innerHTML = `<div style="font-size:1.3rem; font-weight:900;">${d}</div><div style="font-size:0.6rem; color:#666;">${gDate.getDate()} ${gDate.toLocaleString('default',{month:'short'})}</div>`;
-            cell.onclick = () => {
-                selectedId = id;
-                document.getElementById('planner').style.display = 'block';
-                document.getElementById('pSakaDate').innerText = `${m.name} ${d}`;
-                render(); loadTasks();
-                document.getElementById('planner').scrollIntoView({ behavior: 'smooth' });
-            };
-            grid.appendChild(cell);
+            <div class="bg-white/5 border border-white/10 p-6 md:p-8 rounded-lg">
+                <div class="grid sm:grid-cols-2 gap-4 md:gap-6 mb-6">
+                    <input type="text" id="user-name" placeholder="OPERATOR ID" class="w-full bg-black/40 border border-white/10 px-4 py-3 text-xs focus:border-sky-500 outline-none transition-all">
+                    <select class="w-full bg-black/40 border border-white/10 px-4 py-3 text-xs focus:border-sky-500 outline-none">
+                        <option>GUEST ACCESS</option>
+                        <option>PRIORITY INTEL</option>
+                    </select>
+                </div>
+                <textarea id="query-text" rows="3" placeholder="Input query..." class="w-full bg-black/40 border border-white/10 px-4 py-3 text-xs focus:border-sky-500 outline-none transition-all mb-4"></textarea>
+                <button onclick="postQuery()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-black uppercase py-4 text-xs tracking-[0.2em] transition-all">Transmit Message</button>
+            </div>
+            
+            <div id="query-container" class="mt-8 space-y-4">
+                <div class="bg-white/5 border-l-4 border-emerald-500 p-4 md:p-6 text-sm">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-emerald-400 font-mono text-[10px]">@HQ_Admin</span>
+                        <span class="text-white/20 font-mono text-[9px]">VERIFIED 2026-03-27</span>
+                    </div>
+                    <p class="text-white/60 italic">"System online. All tactical channels are now open."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stack" class="py-16 md:py-32 bg-slate-100 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 md:gap-24">
+            <div>
+                <h3 class="text-3xl md:text-5xl font-black mb-6 uppercase tracking-tighter">Operational <br>Capabilities</h3>
+                <p class="text-slate-500 text-base md:text-lg font-light italic mb-8">Certified proficiency in mission-critical technology stacks.</p>
+                <div class="p-6 md:p-8 bg-[#004990] text-white shadow-2xl relative rounded">
+                    <i data-lucide="verified" class="absolute top-4 right-4 text-sky-400 opacity-40"></i>
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] mb-4">Lead Developer Rating</p>
+                    <p class="text-xs md:text-sm font-light leading-relaxed opacity-80 italic">"Architecture rigidity and neural adaptability are the pillars of the next digital era."</p>
+                </div>
+            </div>
+            <div class="grid gap-3 md:gap-4">
+                <div class="bg-white p-5 md:p-6 flex justify-between items-center border-l-4 border-[#004990] shadow-sm">
+                    <span class="font-black uppercase text-[10px] tracking-widest">Intelligent UI/UX Designing</span>
+                    <span class="text-sky-600 font-black text-[10px]">CLASS A</span>
+                </div>
+                <div class="bg-white p-5 md:p-6 flex justify-between items-center border-l-4 border-[#004990] shadow-sm">
+                    <span class="font-black uppercase text-[10px] tracking-widest">AI Modeling (PyTorch)</span>
+                    <span class="text-sky-600 font-black text-[10px]">CLASS A</span>
+                </div>
+                <div class="bg-white p-5 md:p-6 flex justify-between items-center border-l-4 border-[#004990] shadow-sm">
+                    <span class="font-black uppercase text-[10px] tracking-widest">Multimedia Forensic Analysis</span>
+                    <span class="text-sky-600 font-black text-[10px]">CLASS A</span>
+                </div>
+                <div class="bg-white p-5 md:p-6 flex justify-between items-center border-l-4 border-[#004990] shadow-sm">
+                    <span class="font-black uppercase text-[10px] tracking-widest">Software Solutions</span>
+                    <span class="text-sky-600 font-black text-[10px]">CLASS A</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0A0C0D] text-white py-16 md:py-24 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col items-center gap-12">
+            <div class="text-center">
+                <p class="text-[10px] font-mono tracking-[0.4em] uppercase text-white/40 mb-4"><span class="natnex-font text-lg md:text-xl">SMARD </span>by <span class="natnex-font text-lg md:text-xl">NatNex IQ</span></p>
+                <div class="h-px w-48 bg-sky-500 mx-auto opacity-30"></div>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 gap-10 w-full max-w-4xl border-y border-white/5 py-12">
+                <div class="text-center sm:text-left">
+                    <h5 class="text-sky-400 font-black uppercase text-[9px] tracking-widest mb-4">Contact Intelligence</h5>
+                    <p class="text-lg md:text-xl font-bold font-mono">nexpploro@gmail.com</p>
+                    <p class="text-lg md:text-xl font-bold font-mono text-emerald-400">+91 9142543191</p>
+                </div>
+                <div class="flex flex-col sm:items-end justify-center gap-4 text-center sm:text-right">
+                    <a href="https://github.com/abhinibeshgh2024" target="_blank" class="hover:text-sky-400 transition-colors uppercase tracking-[0.2em] text-[10px] font-black">GitHub</a>
+                    <a href="https://www.linkedin.com/in/abhinibesh-gupta-758596265/" target="_blank" class="hover:text-sky-400 transition-colors uppercase tracking-[0.2em] text-[10px] font-black">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between w-full opacity-20 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-center md:text-left">
+                <p>© 2026, SMARD: A Product by NatNex IQ</p>
+                <p>INDIA . BHARAT</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const nav = document.getElementById('navbar');
+        const progressBar = document.getElementById('progress-bar');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
         }
-    }
-
-    function saveEvent() {
-        const val = document.getElementById('taskInput').value.trim();
-        if(!val) return;
-        if(!myTasks[selectedId]) myTasks[selectedId] = [];
-        myTasks[selectedId].push(val);
-        localStorage.setItem('smard_tasks', JSON.stringify(myTasks));
-        document.getElementById('taskInput').value = '';
-        loadTasks();
-    }
-
-    function loadTasks() {
-        const list = document.getElementById('taskList');
-        list.innerHTML = '';
-        if(selectedId && selectedId.endsWith('-0-1')) {
-            list.innerHTML += `<div class="event-card" style="border-left-color:var(--neon-red)">🚩 Happy Birthday Abhinibesh!</div>`;
-        }
-        (myTasks[selectedId] || []).forEach(t => {
-            list.innerHTML += `<div class="event-card">${t}</div>`;
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.remove('py-4', 'md:py-5');
+                nav.classList.add('glass', 'py-2', 'md:py-3', 'shadow-2xl');
+            } else {
+                nav.classList.add('py-4', 'md:py-5');
+                nav.classList.remove('glass', 'py-2', 'md:py-3', 'shadow-2xl');
+            }
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
         });
-    }
 
-    function navMonth(dir) { sIdx += dir; if(sIdx > 11) { sIdx = 0; sYear++; } if(sIdx < 0) { sIdx = 11; sYear--; } render(); }
-    render();
-</script>
+        function postQuery() {
+            const name = document.getElementById('user-name').value || 'Unknown Operator';
+            const text = document.getElementById('query-text').value;
+            if(!text) { alert("MESSAGE FIELD EMPTY."); return; }
+
+            const container = document.getElementById('query-container');
+            const newEntry = `
+                <div class="bg-white/[0.02] border-l-4 border-sky-500 p-4 animate-pulse">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sky-400 font-mono text-[10px]">@${name}</span>
+                        <span class="text-white/20 font-mono text-[9px]">PENDING VERIFICATION</span>
+                    </div>
+                    <p class="text-white/70 italic text-sm">"${text}"</p>
+                </div>
+            `;
+            container.insertAdjacentHTML('afterbegin', newEntry);
+            document.getElementById('query-text').value = "";
+        }
+    </script>
 </body>
 </html>
